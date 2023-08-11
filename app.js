@@ -1,6 +1,7 @@
 const {Client, Collection, GatewayIntentBits} = require('discord.js');
 const fs = require('node:fs');
 const path = require('node:path');
+const {token} = require('./config.json')
 
 
 //bot tanımı
@@ -41,5 +42,4 @@ for (let eventFile of eventFiles){
 
 
 //bot aktifleştirme
-client.login('MTEzOTI5NTgyOTQ0MjY5MTEzMg.GcfYQN.iNR0ziFSRr4fwon8OeUIBLyp4UodItqS9V0yb0');
-//MTEzOTI5NTgyOTQ0MjY5MTEzMg.GcfYQN.iNR0ziFSRr4fwon8OeUIBLyp4UodItqS9V0yb0
+client.login(token);
