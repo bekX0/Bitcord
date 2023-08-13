@@ -2,7 +2,6 @@ const { SlashCommandBuilder } = require("discord.js");
 const fs = require("node:fs");
 
 module.exports = {
-  cooldown: 3,
   data: new SlashCommandBuilder()
     .setName("reload")
     .setDescription("Reloads a command.")

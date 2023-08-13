@@ -7,10 +7,10 @@ module.exports = {
 	name: Events.ClientReady,
 	once: true,
 	async execute(client) {
-		console.log(`${client.user.username} hazır!!`);
+		console.log(`${client.user.username} is ready!!`);
 		if(!sqlConnectionString) return;
 		await mongoose.connect(sqlConnectionString).then(() => {
-			console.log("Veritabanı bağlantısı başarılı!");
+			console.log("Database connection successful!");
 		});
 
 		// guilds database sync ----------------------------------------------
@@ -28,6 +28,5 @@ module.exports = {
 		}else{
 			console.log("Guilds database is in sync!");
 		}
-		
 	},
 };

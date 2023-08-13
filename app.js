@@ -10,6 +10,7 @@ const client = new Client({intents: [GatewayIntentBits.Guilds, GatewayIntentBits
 
 //command handler
 client.commands = new Collection();
+client.globalCommands = new Collection();
 const folderPaths = path.join(__dirname, 'src/commands');
 const commandFolders = fs.readdirSync(folderPaths);
 for (let category of commandFolders){
@@ -20,6 +21,7 @@ for (let category of commandFolders){
         let command = require(commandPath);
         if('data' in command && 'execute' in command){
             client.commands.set(command.data.name, command)
+            if(category != "Admin"){ client.globalCommands.set(command.data.name, command)}
         }else{
             console.log(`[WARNING] The command at ${commandPath} is missing a required "data" or "execute" property.`);
         }
