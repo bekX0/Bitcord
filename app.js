@@ -2,6 +2,7 @@ const {Client, Collection, GatewayIntentBits} = require('discord.js');
 const fs = require('node:fs');
 const path = require('node:path');
 const {token} = require('./config.json')
+const database = require('./src/utils/database/guilds_Methods.js');
 
 
 //bot tanımı
@@ -33,13 +34,14 @@ for (let eventFile of eventFiles){
     let eventFilePath = path.join(eventsPath, eventFile);
     let event = require(eventFilePath);
     if(event.once){
-        client.once(event.name, (...args) => event.execute(...args));
+        client.once(event.name, (...args) => event.execute(...args, client));
     }else{
-        client.on(event.name, (...args) => event.execute(...args))
+        client.on(event.name, (...args) => event.execute(...args, client))
     }
 }
 
-
+// database ------
+client.database = database;
 
 //bot aktifleştirme
 client.login(token);
