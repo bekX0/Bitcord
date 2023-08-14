@@ -3,6 +3,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const {token} = require('./config.json')
 const database = require('./src/utils/database/guilds_Methods.js');
+const {embed} = require('./src/utils/methods/embed.js');
 
 
 //bot tanımı
@@ -42,8 +43,25 @@ for (let eventFile of eventFiles){
     }
 }
 
+//----------------------- component handler ----------------------
+//-select menus
+client.selectMenus = new Collection();
+const selectmenusPath = path.join(__dirname, 'src/components/selectMenus');
+const selectMenus = fs.readdirSync(selectmenusPath).filter(file => file.endsWith('.js'));
+for (let selectmenu of selectMenus){
+    let menuPath = path.join(selectmenusPath, selectmenu);
+    let menu = require(menuPath);
+    client.selectMenus.set(menu.data.name, menu);
+}
+
 // database ------
 client.database = database;
+
+//methods initialize
+client.embed = embed;
+
+//emoji setup
+client.emoji = new Collection(); 
 
 //bot aktifleştirme
 client.login(token);

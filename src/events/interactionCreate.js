@@ -1,8 +1,9 @@
 module.exports = {
     name: "interactionCreate",
     execute: async (interaction) => {
+      const client = interaction.client;
     if (interaction.isChatInputCommand()){
-        const command = interaction.client.commands.get(interaction.commandName);
+        const command = client.commands.get(interaction.commandName);
 
 	    if (!command) {
 	    	console.error(`No command matching ${interaction.commandName} was found.`);
@@ -23,7 +24,7 @@ module.exports = {
 
         //autocomplete
         else if (interaction.isAutocomplete()) {
-            const command = interaction.client.commands.get(interaction.commandName);
+            const command = client.commands.get(interaction.commandName);
       
             if (!command) {
               console.error(
@@ -38,5 +39,18 @@ module.exports = {
               console.error(error);
             }
           }
+
+
+        // selectmenus
+        else if (interaction.isAnySelectMenu()){
+          let id = interaction.customId;
+          let menu = client.selectMenus.get(id);
+          try {
+            menu.execute(interaction);
+          } catch (error) {
+            console.log(error);
+            console.log(`${id} gave an error!`);
+          }
+        }
     }
 }

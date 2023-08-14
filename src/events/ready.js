@@ -1,13 +1,12 @@
 const { Events } = require('discord.js');
 const mongoose = require('mongoose');
 const { guilds_Schema } = require('../utils/database/guilds_Schema');
-const {sqlConnectionString} =require("../../config.json");
+const {sqlConnectionString, guildId} =require("../../config.json");
 
 module.exports = {
 	name: Events.ClientReady,
 	once: true,
 	async execute(client) {
-		console.log(`${client.user.username} is ready!!`);
 		if(!sqlConnectionString) return;
 		await mongoose.connect(sqlConnectionString).then(() => {
 			console.log("Database connection successful!");
@@ -28,5 +27,12 @@ module.exports = {
 		}else{
 			console.log("Guilds database is in sync!");
 		}
+
+		//emojis setup from test server----------------------------------------------
+		client.guilds.cache.get(guildId).emojis.cache.forEach(e => client.emoji.set(e.name, e))
+		console.log("Emoji setup competed!")
+
+		//setup completed --------------------------------------------
+		console.log(`${client.user.username} is ready!!`);
 	},
 };

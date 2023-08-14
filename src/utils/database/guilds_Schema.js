@@ -9,6 +9,8 @@ const guilds_Schema = mongoose.model("guilds", new mongoose.Schema({
     regRequestChannel: {type: String},
     autoRoleStatus: {type: Boolean, default: false},
     autoRoleList: {type: Array},
+    registerSystemStatus: {type: Boolean, default: false},
+    registererRoles: {type: Array},
     unregisteredRole: {type: String},
     registerRequested: {type: Array},
     autoMessageStatus: {type: Boolean, default: false},
