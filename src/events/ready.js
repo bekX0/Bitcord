@@ -1,12 +1,14 @@
 const { Events } = require('discord.js');
 const mongoose = require('mongoose');
 const { guilds_Schema } = require('../utils/database/guilds_Schema');
-const {sqlConnectionString, guildId} =require("../../config.json");
+const {guildId} =require("../../config.json");
+require('dotenv').config();
 
 module.exports = {
 	name: Events.ClientReady,
 	once: true,
 	async execute(client) {
+		let sqlConnectionString = process.env.SQL;
 		if(!sqlConnectionString) return;
 		await mongoose.connect(sqlConnectionString).then(() => {
 			console.log("Database connection successful!");

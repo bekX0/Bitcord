@@ -19,6 +19,7 @@
   "homepage": "https://github.com/bekX0/Bitcord#readme",
   "dependencies": {
     "discord.js": "^14.12.1",
+    "dotenv": "^16.3.1",
     "mongodb": "^5.7.0",
     "mongoose": "^7.4.2"
   }

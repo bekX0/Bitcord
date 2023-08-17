@@ -1,9 +1,9 @@
 const {Client, Collection, GatewayIntentBits} = require('discord.js');
 const fs = require('node:fs');
 const path = require('node:path');
-const {token} = require('./config.json')
 const database = require('./src/utils/database/guilds_Methods.js');
 const {embed} = require('./src/utils/methods/embed.js');
+require('dotenv').config();
 
 
 //bot tanımı
@@ -64,4 +64,4 @@ client.embed = embed;
 client.emoji = new Collection(); 
 
 //bot aktifleştirme
-client.login(token);
+client.login(process.env.TOKEN);
