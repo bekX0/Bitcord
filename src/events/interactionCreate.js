@@ -52,5 +52,17 @@ module.exports = {
             console.log(`${id} gave an error!`);
           }
         }
+
+        //buttons
+        else if (interaction.isButton()){
+          let id = interaction.customId;
+          let button = client.buttons.get(id);
+          try {
+            button.execute(interaction);
+          } catch (error) {
+            console.log(error);
+            console.log(`${id} gave an error!`);
+          }
+        }
     }
 }

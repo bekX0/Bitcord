@@ -33,3 +33,11 @@ exports.fetch = async (guild, client) => {
     }
 }
 
+exports.update = async (guild, update) => {
+    if(typeof guild === "string"){
+        await guilds_Schema.updateOne({guildId: guild}, {update});
+        
+    }else if(typeof guild === "object"){
+        await guilds_Schema.updateOne({guildId: guild.id}, {$set:update});
+    }
+}

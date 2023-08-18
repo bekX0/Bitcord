@@ -1,33 +1,14 @@
-const { SlashCommandBuilder, PermissionFlagsBits, StringSelectMenuBuilder, ActionRowBuilder, StringSelectMenuOptionBuilder, EmbedBuilder } = require("discord.js");
+const { SlashCommandBuilder, PermissionFlagsBits, EmbedBuilder } = require("discord.js");
 
 module.exports = {
     data: new SlashCommandBuilder()
-            .setName('kayıt-kurulum')
-            .setDescription('Sunucunuza kayıt sistemini kurmanızı sağlar.')
+            .setName('kayıt-panel')
+            .setDescription('Sunucunuza kayıt sisteminin panelini görüntüler.')
             .setDMPermission(false)
             .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
     async execute(interaction){
         let client = interaction.client;
         let emoji = (name) => {return client.emoji.get(name)};
-
-        let selectMenu = new StringSelectMenuBuilder()
-                        .setPlaceholder(`Kayıt Menüsü`)
-                        .setCustomId('register-setup')
-                        .addOptions(
-                            new StringSelectMenuOptionBuilder()
-                                .setLabel('Rolleri Düzenle')
-                                .setEmoji(`${emoji('settings').id}`)
-                                .setValue('reg_roles'),
-                            new StringSelectMenuOptionBuilder()
-                                .setLabel('Kanalları Düzenle')
-                                .setEmoji(`${emoji('settings').id}`)
-                                .setValue('reg_channels'),
-                            new StringSelectMenuOptionBuilder()
-                                .setLabel('Sistemi Aç/Kapat')
-                                .setEmoji(`${emoji('settings').id}`)
-                                .setValue('reg_switch')
-                        )
-        let row = new ActionRowBuilder().addComponents(selectMenu)
 
         let data = await interaction.client.database.fetch(interaction.guild.id);
         let embed = new EmbedBuilder()
@@ -44,6 +25,6 @@ module.exports = {
                             )
 
 
-        await interaction.reply({components:[row], embeds:[embed], fetchReply:true});
+        await interaction.reply({embeds:[embed], fetchReply:true});
     }
 }

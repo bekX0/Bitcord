@@ -53,6 +53,15 @@ for (let selectmenu of selectMenus){
     let menu = require(menuPath);
     client.selectMenus.set(menu.data.name, menu);
 }
+//-buttons
+client.buttons = new Collection();
+const buttonsPath = path.join(__dirname, 'src/components/buttons');
+const buttons = fs.readdirSync(buttonsPath).filter(file => file.endsWith('.js'));
+for (let buttonFile of buttons){
+    let buttonPath = path.join(buttonsPath, buttonFile);
+    let button = require(buttonPath);
+    client.buttons.set(button.data.name, button);
+}
 
 // database ------
 client.database = database;
