@@ -22,9 +22,15 @@ module.exports = {
         updateArray.splice(indexNum, 1);
         await client.database.update(interaction.guild, {registerRequested: updateArray})
 
-        await member.roles.add([data.registeredRoles.female, data.registeredRoles.reg]);
-        await member.roles.remove(data.unregisteredRole);
-        await member.setNickname(`${userInfo.name} » ${userInfo.age}`);
+        try {
+            await member.roles.add([data.registeredRoles.female, data.registeredRoles.reg]);
+            await member.roles.remove(data.unregisteredRole);
+            await member.setNickname(`${userInfo.name} » ${userInfo.age}`);
+        } catch (error) {
+            console.log("register_female error")
+            await interaction.reply({content:"Botun rolünü üste taşır mısın :(", ephemeral:true})
+            return
+        }
         await interaction.message.delete();
         //log register
         let channel = interaction.guild.channels.cache.get(data.regLogChannel);
@@ -34,8 +40,8 @@ module.exports = {
                         {name:"Kayıt Yetkilisi", value:`<@${interaction.member.id}>`, inline:true},
                         {name:"Üye:", value:`<@${userInfo.id}>`, inline:true}
                     )
-                    .setImage(interaction.guild.members.cache.get(userInfo.id).getAvatarURL());
+                    .setImage(interaction.guild.members.cache.get(userInfo.id).displayAvatarURL());
         await channel.send({embeds:[embed]});
-        await interaction.reply({embeds:[client.embed("Başarılı!", "Kayıt tamamlandı ve log kanalına yazıldı.")]})
+        await interaction.reply({embeds:[client.embed("Başarılı!", "Kayıt tamamlandı ve log kanalına yazıldı.")], ephemeral:true})
     }
 }

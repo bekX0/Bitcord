@@ -9,7 +9,6 @@ module.exports = {
         .addStringOption(option => option.setName('ad').setDescription('Sana seslenebilmemiz için bize adını söylemelisin.').setRequired(true))
         .addStringOption(option => option.setName('yas').setDescription('Kaç yaşında olduğunu söyler misin?').setRequired(true))
         .addStringOption(option => option.setName('aciklama').setDescription('Bizlere kendinen kısaca bahsetmeni istiyoruz.').setRequired(true))
-        .addStringOption(option => option.setName('sehir').setDescription('Acun abi yarışmaya nerden katıldığını merak ediyor.(Bu bilgi opsiyonel :)  )').setRequired(false))
         .setDMPermission(false),
     async execute(interaction){
         let client = interaction.client;
@@ -33,7 +32,7 @@ module.exports = {
         }
         const name = interaction.options.getString('ad');
         const age = interaction.options.getString('yas');
-        const city = interaction.options.getString('sehir') ?? 'belirtmedi';
+        //const city = interaction.options.getString('sehir') ?? 'belirtmedi';
         const desc = interaction.options.getString('aciklama');
 
 
@@ -53,7 +52,7 @@ module.exports = {
             .addFields(
                 {name:'Ad', value: name, inline:true},
                 {name:'Yaş', value: age, inline:true},
-                {name:'Şehir', value: city, inline:true},
+                //{name:'Şehir', value: city, inline:true},
                 {name:'Açıklama', value: desc, inline:false},
             )
             .setFooter({iconURL: client.user.avatarURL(), text: `Mahallenin dost canlısı asistanı **${client.user.username}**`});

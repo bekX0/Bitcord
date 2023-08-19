@@ -3,8 +3,8 @@ const mongoose = require("mongoose");
 const guilds_Schema = mongoose.model("guilds", new mongoose.Schema({
     guildId: {type: String, required:true, unique: true},
     guildName: {type: String, required:true, unique: false},
-    ownerId: {type: String, required:true, unique: true},
     guildLevel: {type: Number, default: 0, required:true, unique: false},
+    ownerId: {type: String, required:true},
     settingsChannel: {type: String, required:false},
     regRequestChannel: {type: String},
     regLogChannel: {type: String},
@@ -17,7 +17,8 @@ const guilds_Schema = mongoose.model("guilds", new mongoose.Schema({
     registerRequested: {type: Array},
     autoMessageStatus: {type: Boolean, default: false},
     autoMessageList: {type: Array},
-    messageFilterStatus: {type: Boolean, default: false}
+    messageFilterStatus: {type: Boolean, default: false},
+    reactionRoles:{type: Array}
 }))
 
 module.exports = {guilds_Schema}

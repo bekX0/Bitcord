@@ -41,7 +41,7 @@ module.exports = {
             let row3 = new ActionRowBuilder().addComponents(selectMenu_registerer)
             let row4 = new ActionRowBuilder().addComponents(selectMenu_male)
             let row5 = new ActionRowBuilder().addComponents(selectMenu_female)
-            await interaction.reply({content: 'Rolleri seçin.', components: [row1, row2, row3, row4, row5]});
+            await interaction.reply({content: 'Rolleri seçin.', components: [row1, row2, row3, row4, row5], ephemeral:true});
         }else if(option == 'reg_channels'){
             let selectMenu_log = new ChannelSelectMenuBuilder()
                             .setCustomId('reg_channels_menu_log')
@@ -57,7 +57,7 @@ module.exports = {
                             .addChannelTypes(ChannelType.GuildText)
             let row2 = new ActionRowBuilder().addComponents(selectMenu_request)
 
-            await interaction.reply({components: [row1, row2]})
+            await interaction.reply({components: [row1, row2], ephemeral:true})
         }else if(option == 'reg_switch'){
             //check for system requirements
             if(!data.regRequestChannel) {sendMessage(interaction); return;}

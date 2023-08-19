@@ -7,7 +7,7 @@ require('dotenv').config();
 
 
 //bot tanımı
-const client = new Client({intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages]})
+const client = new Client({intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildMessageReactions]})
 
 //command handler
 client.commands = new Collection();
@@ -37,9 +37,9 @@ for (let eventFile of eventFiles){
     let eventFilePath = path.join(eventsPath, eventFile);
     let event = require(eventFilePath);
     if(event.once){
-        client.once(event.name, (...args) => event.execute(...args, client));
+        client.once(event.name, (...args) => event.execute(...args));
     }else{
-        client.on(event.name, (...args) => event.execute(...args, client))
+        client.on(event.name, (...args) => event.execute(...args))
     }
 }
 
@@ -51,7 +51,9 @@ const selectMenus = fs.readdirSync(selectmenusPath).filter(file => file.endsWith
 for (let selectmenu of selectMenus){
     let menuPath = path.join(selectmenusPath, selectmenu);
     let menu = require(menuPath);
-    client.selectMenus.set(menu.data.name, menu);
+    if('data' in menu && 'execute' in menu){
+        client.selectMenus.set(menu.data.name, menu);
+    }
 }
 //-buttons
 client.buttons = new Collection();
@@ -60,7 +62,9 @@ const buttons = fs.readdirSync(buttonsPath).filter(file => file.endsWith('.js'))
 for (let buttonFile of buttons){
     let buttonPath = path.join(buttonsPath, buttonFile);
     let button = require(buttonPath);
-    client.buttons.set(button.data.name, button);
+    if('data' in button && 'execute' in button){
+        client.buttons.set(button.data.name, button);
+    }
 }
 
 // database ------

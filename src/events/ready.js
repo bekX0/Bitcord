@@ -34,6 +34,15 @@ module.exports = {
 		client.guilds.cache.get(guildId).emojis.cache.forEach(e => client.emoji.set(e.name, e))
 		console.log("Emoji setup competed!")
 
+		//fetching react-role messages
+		guildsDatabase.forEach(guild => {
+			if(guild.reactionRoles.length !== 0){
+				guild.reactionRoles.forEach(async message => {
+					await client.guilds.cache.get(guild.guildId).channels.cache.get(message.channelID).messages.fetch(message.messageID);
+				})
+			}
+		})
+
 		//setup completed --------------------------------------------
 		console.log(`${client.user.username} is ready!!`);
 	},
