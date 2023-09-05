@@ -66,6 +66,17 @@ for (let buttonFile of buttons){
         client.buttons.set(button.data.name, button);
     }
 }
+//-modals
+client.modals = new Collection();
+const modalsPath = path.join(__dirname, 'src/components/modals');
+const modals = fs.readdirSync(modalsPath).filter(file => file.endsWith('.js'));
+for (let modalFile of modals){
+    let modalPath = path.join(modalsPath, modalFile);
+    let modal = require(modalPath);
+    if('data' in modal && 'execute' in modal){
+        client.modals.set(modal.data.name, modal);
+    }
+}
 
 // database ------
 client.database = database;

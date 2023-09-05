@@ -27,7 +27,8 @@ module.exports = {
             return
         } 
 
-        let member = interaction.guild.members.cache.get(userInfo.id);    
+        await interaction.guild.members.fetch();;
+        let member = interaction.guild.members.cache.get(userInfo.id);
         //db old request erease
         let indexNum = data.registerRequested.indexOf(data.registerRequested.find(r => r.id === userInfo.id));
         let updateArray = data.registerRequested

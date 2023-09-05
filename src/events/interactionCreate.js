@@ -64,5 +64,17 @@ module.exports = {
             console.log(`${id} gave an error!`);
           }
         }
+
+        // modals
+        else if (interaction.isModalSubmit()){
+          let id = interaction.customId;
+          let modal = client.modals.get(id);
+          try {
+            modal.execute(interaction);
+          } catch (error) {
+            console.log(error);
+            console.log(`${id} gave an error!`);
+          }
+        }
     }
 }

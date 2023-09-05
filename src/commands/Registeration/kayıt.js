@@ -63,9 +63,17 @@ module.exports = {
                 .setEmoji(client.emoji.get('male').id);
         let bt2 = new ButtonBuilder()
                 .setCustomId('reg_f')
-                .setStyle(ButtonStyle.Danger)
+                .setStyle(ButtonStyle.Primary)
                 .setEmoji(client.emoji.get('female').id);
-        let row = new ActionRowBuilder().addComponents(bt1, bt2)
+        let bt3 = new ButtonBuilder()
+                .setCustomId('reg_del')
+                .setStyle(ButtonStyle.Secondary)
+                .setEmoji(client.emoji.get('settings').id);
+        let bt4 = new ButtonBuilder()
+                .setCustomId('reg_ban')
+                .setStyle(ButtonStyle.Danger)
+                .setEmoji(client.emoji.get('banhammer').id);
+        let row = new ActionRowBuilder().addComponents(bt1, bt2, bt3, bt4);
         await interaction.reply({embeds: [embed], ephemeral:true});
         let response = await channel.send({embeds: [logEmbed], components:[row]});
 

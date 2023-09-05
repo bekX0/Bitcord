@@ -68,10 +68,10 @@ module.exports = {
             //
             if(data.registerSystemStatus){
                 await client.database.update(interaction.guild, {registerSystemStatus: false});
-                await interaction.reply({content:"Kayıt sistemi aktif!", ephemeral:true});
+                await interaction.reply({content:"Kayıt sistemi deaktif!", ephemeral:true});
             }else{
                 await client.database.update(interaction.guild, {registerSystemStatus: true});
-                await interaction.reply({content:"Kayıt sistemi deaktif!", ephemeral:true});
+                await interaction.reply({content:"Kayıt sistemi aktif!", ephemeral:true});
             }
         }
     }

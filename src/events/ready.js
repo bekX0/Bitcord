@@ -43,6 +43,27 @@ module.exports = {
 			}
 		})
 
+		// autorole sync
+		await client.guilds.fetch();
+		await client.guilds.cache.forEach(async guild => {
+			await guild.members.fetch();
+			await guild.members.cache.forEach(async member => {
+				if(member.roles.cache.size === 1){
+					let __guild__ = guildsDatabase.find(db => db.guildId === guild.id);
+					if(__guild__.autoRoleStatus){
+						await member.roles.add(__guild__.autoRoleList);
+					}
+				}
+			})
+		})
+
+
+		// await new Promise(async (resolve, reject) => {
+		// 	await client.guilds.fetch();
+			
+		// 	resolve(); // İşlem tamamlandığında Promise'i çöz
+		// });
+
 		//setup completed --------------------------------------------
 		console.log(`${client.user.username} is ready!!`);
 	},

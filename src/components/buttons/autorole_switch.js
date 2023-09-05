@@ -13,11 +13,11 @@ module.exports = {
 
         if(!data.autoRoleStatus){
             await client.database.update(interaction.guild.id, {autoRoleStatus: true});
-            await interaction.reply({embeds:[client.embed('Başarılı!', 'Otorol Aktifleştirildi!')]})
+            await interaction.reply({embeds:[client.embed('Başarılı!', 'Otorol Aktifleştirildi!')], ephemeral:true})
 
         }else{
             await client.database.update(interaction.guild.id, {autoRoleStatus: false});
-            await interaction.reply({embeds:[client.embed('Başarılı!', 'Otorol Kapatıldı!')]})
+            await interaction.reply({embeds:[client.embed('Başarılı!', 'Otorol Kapatıldı!')], ephemeral:true})
         }
     }
 }
