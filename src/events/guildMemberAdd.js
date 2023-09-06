@@ -14,5 +14,7 @@ module.exports = {
         for (let role of data.autoRoleList){
             await member.roles.add(role);
         }
+
+        
     }
 }

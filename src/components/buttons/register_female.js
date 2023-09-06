@@ -23,12 +23,20 @@ module.exports = {
         };
         let userInfo = data.registerRequested.find(r => r.messageID === interaction.message.id);
         if(!userInfo){
-            await interaction.editReply({content:"Bu üye tarafından gönderilen bir talep bulamadım.", ephemeral:true})
+            await interaction.editReply({content:"Bu üye tarafından gönderilen bir talep bulamadım.", ephemeral:true});
+            await interaction.message.delete();
             return
         } 
 
         await interaction.guild.members.fetch();
-        let member = interaction.guild.members.cache.get(userInfo.id);    
+        let member = interaction.guild.members.cache.get(userInfo.id); 
+        //if member leaved
+        if (!member){
+            await interaction.editReply({content:"Kişi sunucudan ayrılmış!", ephemeral:true})
+            await interaction.message.delete();
+            return;
+        } 
+
         //db old request erease
         let indexNum = data.registerRequested.indexOf(data.registerRequested.find(r => r.id === userInfo.id));
         let updateArray = data.registerRequested

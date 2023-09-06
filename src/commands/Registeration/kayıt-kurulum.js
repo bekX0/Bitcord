@@ -44,6 +44,6 @@ module.exports = {
                             )
 
 
-        await interaction.reply({components:[row], embeds:[embed], fetchReply:true});
+        await interaction.reply({components:[row], embeds:[embed], fetchReply:true, ephemeral: true});
     }
 }

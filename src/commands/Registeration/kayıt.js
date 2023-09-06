@@ -8,7 +8,7 @@ module.exports = {
         .setDefaultMemberPermissions(PermissionFlagsBits.SendMessages)
         .addStringOption(option => option.setName('ad').setDescription('Sana seslenebilmemiz için bize adını söylemelisin.').setRequired(true))
         .addStringOption(option => option.setName('yas').setDescription('Kaç yaşında olduğunu söyler misin?').setRequired(true))
-        .addStringOption(option => option.setName('aciklama').setDescription('Bizlere kendinen kısaca bahsetmeni istiyoruz.').setRequired(true))
+        .addStringOption(option => option.setName('aciklama').setDescription('Kendini tanıt.Kısa ve saçma şeyler yazmak yerine kendinizi tanıtın lütfen.').setRequired(true))
         .setDMPermission(false),
     async execute(interaction){
         let client = interaction.client;

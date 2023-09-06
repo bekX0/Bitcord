@@ -17,14 +17,23 @@ module.exports = {
             }
         }
         if(!check){
-            await interaction.editReply({embeds:[client.embed("Hata!", "Görünüşe göre kayıt yetkilisi değilsin.")]});
+            await interaction.reply({embeds:[client.embed("Hata!", "Görünüşe göre kayıt yetkilisi değilsin.")]});
             return;
         };
         let userInfo = data.registerRequested.find(r => r.messageID === interaction.message.id);
         if(!userInfo){
-            await interaction.editReply({content:"Bu üye tarafından gönderilen bir talep bulamadım.", ephemeral:true})
+            await interaction.reply({content:"Bu üye tarafından gönderilen bir talep bulamadım.", ephemeral:true})
             return
         }
+
+        await interaction.guild.members.fetch();
+        let member = interaction.guild.members.cache.get(userInfo.id); 
+        //if member leaved
+        if (!member){
+            await interaction.reply({content:"Kişi sunucudan ayrılmış!", ephemeral:true})
+            await interaction.message.delete();
+            return;
+        } 
 
         // code
         let modal = new ModalBuilder()

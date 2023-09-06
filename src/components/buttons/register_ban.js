@@ -16,12 +16,17 @@ module.exports = {
         };
         let userInfo = data.registerRequested.find(r => r.messageID === interaction.message.id);
         if(!userInfo){
-            await interaction.editReply({content:"Bu üye tarafından gönderilen bir talep bulamadım.", ephemeral:true})
+            await interaction.editReply({content:"Bu üye tarafından gönderilen bir talep bulamadım.", ephemeral:true});
+            await interaction.message.delete();
             return
         }
 
         // code
         let member = interaction.guild.members.cache.get(userInfo.id);
+        if(!member){
+            await interaction.message.delete();
+            return;
+        }
 
         //db old request erease
         let indexNum = data.registerRequested.indexOf(data.registerRequested.find(r => r.id === userInfo.id));

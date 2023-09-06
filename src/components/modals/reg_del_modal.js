@@ -11,7 +11,7 @@ module.exports = {
 
         
         if(!userInfo){
-            await interaction.editReply({content:"Bu üye tarafından gönderilen bir talep bulamadım.", ephemeral:true})
+            await interaction.reply({content:"Bu üye tarafından gönderilen bir talep bulamadım.", ephemeral:true})
             return
         } 
         let member = interaction.guild.members.cache.get(userInfo.id);
@@ -32,8 +32,13 @@ module.exports = {
         await client.database.update(interaction.guild, {registerRequested: updateArray})
 
         //messages
-        await member.send({embeds:[embed]}).catch(console.error);
-        await interaction.reply({embeds:[client.embed("Talep Başarıyla Silindi", "Kullanıcı yeni bir kayıt açabilir...")], ephemeral:true});
+        let temp = "";
+        await member.send({embeds:[embed]}).catch(error => {
+            if(error.code === 50007){
+                temp = `<@${member.id}> adlı kullanıcıya mesaj gönderme yetkim yok.`
+            }
+        });
+        await interaction.reply({embeds:[client.embed("Talep Başarıyla Silindi", "Kullanıcı yeni bir kayıt açabilir..." + "\n" +temp)], ephemeral:true});
 
         await interaction.message.delete();
     }
