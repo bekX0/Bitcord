@@ -35,11 +35,14 @@ module.exports = {
 		console.log("Emoji setup competed!")
 
 		//fetching react-role messages
-		guildsDatabase.forEach(guild => {
+		guildsDatabase.forEach(async guild => {
 			if(guild.reactionRoles.length !== 0){
 				guild.reactionRoles.forEach(async message => {
 					await client.guilds.cache.get(guild.guildId).channels.cache.get(message.channelID).messages.fetch(message.messageID);
 				})
+			}
+			if(guild.registerSystemStatus){
+				await client.guilds.cache.get(guild.guildId).channels.cache.get(guild.regRequestChannel).messages.fetch();
 			}
 		})
 

@@ -62,7 +62,8 @@ module.exports = {
                         {name:"Kayıt Yetkilisi", value:`<@${interaction.member.id}>`, inline:true},
                         {name:"Üye:", value:`<@${userInfo.id}>`, inline:true}
                     )
-                    .setImage(interaction.guild.members.cache.get(userInfo.id).displayAvatarURL());
+                    .setImage(interaction.guild.members.cache.get(userInfo.id).displayAvatarURL())
+                    .setColor("Green");
         await channel.send({embeds:[embed]});
         await interaction.editReply({embeds:[client.embed("Başarılı!", "Kayıt tamamlandı ve log kanalına yazıldı.")], ephemeral:true});
         await interaction.message.delete();

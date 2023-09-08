@@ -18,7 +18,7 @@ module.exports = {
 
         let embed = new EmbedBuilder()
                     .setTitle("Kayıt Talebin Reddedildi")
-                    .setThumbnail(interaction.guild.bannerURL())
+                    .setThumbnail(interaction.guild.iconURL())
                     .setFooter({iconURL:interaction.guild.iconURL(), text: interaction.guild.name})
                     .addFields(
                         { name: "Yetkili:", value: interaction.member.nickname ?? interaction.user.username, inline: false },
@@ -28,7 +28,7 @@ module.exports = {
         //db old request erease
         let indexNum = data.registerRequested.indexOf(data.registerRequested.find(r => r.id === userInfo.id));
         let updateArray = data.registerRequested
-        updateArray.splice(indexNum, 1);
+        let oldRequest = updateArray.splice(indexNum, 1);
         await client.database.update(interaction.guild, {registerRequested: updateArray})
 
         //messages
@@ -39,6 +39,19 @@ module.exports = {
             }
         });
         await interaction.reply({embeds:[client.embed("Talep Başarıyla Silindi", "Kullanıcı yeni bir kayıt açabilir..." + "\n" +temp)], ephemeral:true});
+        //send log
+        let channel = interaction.guild.channels.cache.get(data.regLogChannel);
+        let logEmbed = new EmbedBuilder()
+                    .setTitle("Kayıt Silindi")
+                    .addFields(
+                        { name: "Yetkili:", value: interaction.member.nickname ?? interaction.user.username, inline: true },
+                        { name: "Üye:", value: `<@${oldRequest.id}>`, inline: true },
+                        { name: "Sebep:", value: interaction.fields.getTextInputValue('reg_del_modal_reason'), inline: true },
+                        interaction.message.embeds[0].fields[2]
+                    )
+                    .setFooter("Üye ID: " + oldRequest.id)
+                    .setColor("Red");
+        await channel.send({embeds:[logEmbed]});
 
         await interaction.message.delete();
     }
